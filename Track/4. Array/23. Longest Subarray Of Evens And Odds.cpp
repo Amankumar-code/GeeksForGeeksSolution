@@ -1,37 +1,64 @@
-class Solution{
+class Solution
+{
     public:
-    //Complete this function
-    //Function to find the length of longest subarray of even and odd numbers.
-    int maxEvenOdd(int a[], int n) 
-    { 
-       //Your code here
-       int longest = 1;
-    int cnt = 1;
- 
-    // Iterate in the array
-    for (int i = 0; i < n - 1; i++) {
- 
-        // increment count if consecutive
-        // elements has an odd sum
-        if ((a[i] + a[i + 1]) % 2 == 1) {
-            cnt++;
-        }
-        else {
-            // Store maximum count in longest
-            longest = max(longest, cnt);
- 
-            // Reinitialize cnt as 1 consecutive
-            // elements does not have an odd sum
-            cnt = 1;
+    int even_odd(int key)
+    {
+    if(key%2==0)
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+int max(int a,int b)
+{
+    if(a>b)
+    return a;
+    else
+    {
+        return b;
+    }
+}
+
+int maxEvenOdd(int arr[], int n) 
+{ 
+    int flag;
+    int count;
+    int res=1;
+    for(int i=0;i<n-1;i++)
+    {
+        flag=even_odd(arr[i]);
+        count=1;
+        for(int j=i+1;j<n;j++)
+        {
+            if(flag==2)
+            {
+                if(arr[j]%2!=0)
+                {
+                    count=count+1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if(flag==1)
+            {
+                if(arr[j]%2==0)
+                {
+                    count=count+1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            flag=even_odd(arr[j]);
+            res=max(count,res);
         }
     }
- 
-    // Length of 'longest' can never be 1
-    // since even odd has to occur in pair or more
-    // so return 0 if longest = 1
-    if (longest == 1)
-        return 0;
- 
-    return max(cnt, longest);
-    } 
-};
+    return res;
+} 
